@@ -1,0 +1,17 @@
+# Dependencias y builds
+node_modules/
+dist/
+
+# Variables de entorno (nunca subir llaves)
+.env
+.env.local
+.env.*.local
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Sistema
+.DS_Store
+Thumbs.db
