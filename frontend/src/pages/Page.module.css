@@ -11,28 +11,3 @@
   margin: 6px 0 0;
   color: var(--color-text-muted);
 }
-
-.placeholder {
-  background: var(--color-surface);
-  border: 2px dashed var(--color-border);
-  border-radius: var(--radius);
-  padding: 32px;
-  color: var(--color-text-muted);
-}
-
-.placeholder h2 {
-  font-size: 16px;
-  color: var(--color-text);
-  margin-bottom: 8px;
-}
-
-.placeholder p {
-  margin: 0 0 16px;
-}
-
-.placeholder code {
-  background: var(--color-bg);
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 13px;
-}

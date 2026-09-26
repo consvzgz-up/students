@@ -1,7 +1,7 @@
 # PRD — EduInsights
 
-> **Borrador inicial.** Revísalo y personalízalo con el prompt del Paso 6.2 de la guía antes de pedirle a Claude que construya las pantallas.
-> Entre más detallado, menos correcciones tendrás que hacer.
+> Especificación de EduInsights. Las tres pantallas ya están implementadas según este documento;
+> actualízalo antes de pedir cambios de alcance.
 
 ## 1. Visión del producto
 
@@ -110,12 +110,12 @@ Response 422: campo inválido. `GET /health` → `{ "status": "ok", "model_loade
 
 ## 7. Checklist de desarrollo
 
-- [ ] Supabase: tabla `students` con 1,000 filas, `id` y `pass_math`
-- [ ] Render: `/health` responde `model_loaded: true`
-- [ ] `frontend/.env.local` configurado
-- [ ] Dashboard con datos mock → datos reales
-- [ ] Explorador con datos mock → filtros, paginación y CSV con Supabase
-- [ ] Predictor con respuesta simulada → API real
-- [ ] Responsive en móvil
-- [ ] Sin errores en consola
+- [x] Supabase: tabla `students` con 1,000 filas, `id` y `pass_math`
+- [x] Render: `/health` responde `model_loaded: true`
+- [x] `frontend/.env.local` configurado
+- [x] Dashboard con datos mock → datos reales
+- [x] Explorador con datos mock → filtros, paginación y CSV con Supabase
+- [x] Predictor con respuesta simulada → API real
+- [x] Responsive en móvil
+- [x] Sin errores en consola
 - [ ] Deploy en Vercel con variables de entorno

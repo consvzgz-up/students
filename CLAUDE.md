@@ -10,9 +10,12 @@ frontend/            React 19 + Vite + Recharts + React Router v6 (se despliega 
   src/pages/         Una página por ruta: Dashboard (/), DataExplorer (/explorer), Predictor (/predictor)
   src/components/
     layout/          Sidebar
-    charts/          BarChartWidget, LineChartWidget (wrappers de Recharts)
-    ui/              DataTable, LoadingSpinner (+ Skeleton), ConnectionStatus
-  src/hooks/         useSupabase (consultas), useMLPredict (POST /predict)
+    charts/          BarChartWidget, LineChartWidget (wrappers de Recharts; aceptan loading/error/onRetry)
+    explorer/        FilterBar (+ DEFAULT_FILTERS)
+    ui/              DataTable, KpiCard, Banner, LoadingSpinner (+ Skeleton),
+                     FormControls (Field, Select, RadioPills, Toggle, ScoreInput, NumberInput)
+  src/constants/     students.js: opciones de cada columna con etiqueta en español, CHART_COLORS
+  src/hooks/         useSupabase + runSupabaseQuery (consultas), useMLPredict + checkMLHealth, useDebouncedValue
   src/lib/           supabaseClient (único lugar donde se crea el cliente)
   src/utils/         dataTransformers: groupBy, average, percentage, sortByOrder, downloadCSV
 ml-api/              FastAPI + scikit-learn (se despliega en Render, Root Directory = ml-api)
@@ -22,14 +25,18 @@ index.html, app.js…  Versión estática original (HTML + Chart.js); no la modi
 
 ## Reglas
 
-- **Datos de Supabase**: siempre a través de `useSupabase` (`src/hooks/useSupabase.js`). Nunca uses `fetch`
-  directo ni importes el cliente de Supabase dentro de un componente.
+- **Datos de Supabase**: siempre a través de `useSupabase` (o `runSupabaseQuery` para acciones puntuales como
+  exportar) de `src/hooks/useSupabase.js`. Nunca uses `fetch` directo ni importes el cliente en un componente.
+- **Paginación**: al cambiar filtros u orden, regresa a la página 0 en el mismo handler (no en un efecto);
+  si no, Supabase recibe un rango fuera de los resultados y responde 416.
+- **Etiquetas**: muestra valores de categorías con `labelOf(OPCIONES, valor)` de `src/constants/students.js`.
 - **Modelo de ML**: siempre a través de `useMLPredict` (`src/hooks/useMLPredict.js`).
 - **Agregaciones** (promedios, agrupaciones): en el frontend con las funciones de `src/utils/dataTransformers.js`.
   Si necesitas una nueva, agrégala ahí, no dentro del componente.
 - **Estilos**: CSS Modules (`Componente.module.css`) junto al componente. Nada de estilos inline salvo valores
   dinámicos (anchos de barras, etc.). Usa las variables de `src/index.css` (`var(--color-primary)`), no hex sueltos.
-- **Colores**: primary `#4F46E5`, success `#10B981`, warning `#F59E0B`, danger `#EF4444`.
+- **Colores**: primary `#4F46E5`, success `#10B981`, warning `#F59E0B`, danger `#EF4444`. En gráficas de Recharts
+  usa `CHART_COLORS` (hex), no `var(--...)`.
 - **Estados de UI**: todo componente que carga datos muestra loading (skeleton o `LoadingSpinner`), error
   descriptivo y estado vacío.
 - **Reutiliza** los componentes de `components/charts` y `components/ui` antes de crear nuevos.

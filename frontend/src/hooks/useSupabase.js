@@ -59,3 +59,16 @@ export function useSupabase(buildQuery, deps = []) {
 
   return { ...state, refetch }
 }
+
+/**
+ * Ejecuta una consulta una sola vez (p. ej. al hacer clic en "Exportar CSV").
+ * Devuelve { data, count } o lanza un Error.
+ */
+export async function runSupabaseQuery(buildQuery) {
+  if (!isSupabaseConfigured) {
+    throw new Error('Faltan VITE_SUPABASE_URL / VITE_SUPABASE_KEY en frontend/.env.local')
+  }
+  const { data, count, error } = await buildQuery(supabase)
+  if (error) throw new Error(error.message)
+  return { data, count }
+}
